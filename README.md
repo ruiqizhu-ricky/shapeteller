@@ -6,6 +6,7 @@ An LLM-powered vscode extension that **tells the shapes of array and tensors** w
 <img src="docs/example-1.png" width=600>
 
 > ![CAUTION] 
+> 
 > Since we make use of LLMs, the resulting shapes may not be accurate due to the inherent problem of hallucination. If you feel doubtful about the result, all want to be 100% accurate, you'd better run the code and print the shapes.
 
 
@@ -15,7 +16,7 @@ An LLM-powered vscode extension that **tells the shapes of array and tensors** w
 
 ![settings](docs/settings.png)
 
-**Step 2**: Turn on the extension when you want to use from the command palette.
+**Step 2**: Turn on the extension when you want to use from the command palette by typing `shapeteller: turn on`.
 
 <img src="docs/turnon.png" width=600>
 
@@ -23,13 +24,13 @@ An LLM-powered vscode extension that **tells the shapes of array and tensors** w
 
 <img src="docs/example-1.png" width=600>
 
-**Step 4**: Turn off the extension when you don't want to use it to avoid unnecessary API calls.
+**Step 4**: Turn off the extension when you don't want to use it from the command palette by typing `shapeteller: turn off`, avoiding unnecessary API calls.
 
 <img src="docs/turnoff.png" width=600>
 
 
 
----
+## Credits
 
-
-<a href="https://www.flaticon.com/free-icons/matrix" title="matrix icons">Matrix icons created by Nadiinko - Flaticon</a>
+- Idea directly brought by [@msaroufim](https://github.com/msaroufim/vscode-pytorch-extension)'s PyTorch extension.
+- Extension icon created by <a href="https://www.flaticon.com/free-icons/matrix" title="matrix icons">Nadiinko - Flaticon</a>
