@@ -1,0 +1,115 @@
+{
+  "name": "shapeteller",
+  "displayName": "Shape Teller",
+  "description": "Display shapes of tensors/arrays when over over a python variable by asking LLMs for help.",
+  "publisher": "ricky",
+  "author": "Ricky Zhu <ruiqi_zhu@outlook.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ruiqizhu-ricky/shapeteller"
+  },
+  "homepage": "https://github.com/ruiqizhu-ricky/shapeteller/blob/main/README.md",
+  "bugs": {
+    "url": "https://github.com/ruiqizhu-ricky/shapeteller/issues",
+    "email": "sean@contoso.com"
+  },
+  "license": "MIT",
+  "version": "0.0.1",
+  "icon": "./icon-matrix.png",
+  "galleryBanner": {
+    "color": "#C80000",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "keywords": [
+    "pytorch",
+    "tensor",
+    "shape",
+    "array",
+    "python"
+  ],
+  "categories": [
+    "Debuggers",
+    "Machine Learning",
+    "AI"
+  ],
+  "activationEvents": [
+    "onCommand:shapeteller.activate"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "shapeteller.turnOn",
+        "title": "Shape Teller: turn on the shapeteller extension"
+      },
+      {
+        "command": "shapeteller.turnOff",
+        "title": "Shape Teller: turn off the shapeteller extension"
+      }
+    ],
+    "configuration": {
+      "title": "Shape Teller",
+      "shapeteller.platform": {
+        "type": "string",
+        "enum": [
+          "Moonshot",
+          "OpenAI",
+          "Anthropic",
+          "Zhipu"
+        ],
+        "default": "Moonshot",
+        "description": "which platform to use"
+      },
+      "properties": {
+        "shapeteller.modelId": {
+          "type": "string",
+          "enum": [
+            "gpt-4o",
+            "gpt-4o-mini",
+            "claude-3-5-sonnet-20240620",
+            "claude-3-opus-20240229",
+            "claude-3-sonnet-20240229",
+            "claude-3-haiku-20240307",
+            "moonshot-v1-auto",
+            "moonshot-v1-8k",
+            "moonshot-v1-32k",
+            "moonshot-v1-128k",
+            "codegeex-4"
+          ],
+          "description": "which LLM to use"
+        },
+        "shapeteller.apiKey": {
+          "type": "string",
+          "description": "your LLM platform API key"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.92.0",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.11.0",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.1",
+    "axios": "^1.7.5",
+    "openai": "^4.56.1"
+  }
+}
