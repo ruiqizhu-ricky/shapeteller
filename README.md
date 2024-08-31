@@ -1,7 +1,7 @@
 # ShapeTeller
 
 
-An LLM-powered vscode extension that **tells the shapes of array and tensors** when hovering over a python variable. 
+An LLM-powered vscode extension that **tells the shape of arrays and tensors** when hovering over a python variable. 
 
 <img src="docs/example-1.png" width=600>
 

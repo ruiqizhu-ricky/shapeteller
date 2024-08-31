@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- User can set `maxToken` in settings
+- Add support for Mistral
+
 ## [0.0.1] - 2024.08.30 (30 Aug 2024)
 
 - Initial release

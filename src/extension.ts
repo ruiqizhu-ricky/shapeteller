@@ -2,9 +2,11 @@ import * as vscode from 'vscode';
 import { HoverProvider, TextDocument, Position, CancellationToken, Hover, MarkdownString } from 'vscode';
 import { getLLMClient } from './llm_clients';
 
+
 const config = vscode.workspace.getConfiguration('shapeteller');
 const client = getLLMClient(config.modelId, config.apiKey);
 var isOn = false;  // controls if call the LLM API when hovering over a variable
+
 
 async function getTensorShapeFromLLM(document: TextDocument, position: Position, selected_var: string): Promise<string | null> {
 	console.log("Requesting shape ...");
@@ -14,7 +16,7 @@ async function getTensorShapeFromLLM(document: TextDocument, position: Position,
 	const prompt = `Here is some Python code:\n\n\`\`\`python\n${code_fragment}\n\`\`\`\n\nPlease provide the expected shape of the tensor \`${selected_var}\` at line ${position.line + 1}, whenever possible, use variable names instead of constant numbers.`;
 
 	try {
-        const generated_text = client.getCompletion(prompt);
+        const generated_text = client.getCompletion(prompt, config.maxToken);
         console.log('result from LLM:' + generated_text);
         return generated_text;
     } catch (error) {
@@ -38,11 +40,11 @@ class PyTorchTensorHoverProvider implements HoverProvider {
             return new Hover('Tensor-teller is off', range);
         }
 
-        // Request the expected tensor shape from the ChatGPT API.
-        const tensorShape = await getTensorShapeFromLLM(document, position, selected_var);
+        // Request the expected tensor shape from the LLM API.
+        const llmResp = await getTensorShapeFromLLM(document, position, selected_var);
 
-        if (tensorShape) {
-            const message = new MarkdownString(`**Tensor shape:** ${tensorShape}`);
+        if (llmResp) {
+            const message = new MarkdownString(`**ShapeTeller:** ${llmResp}`);
             return new Hover(message, range);
         } else{
 			return new Hover('null', range);

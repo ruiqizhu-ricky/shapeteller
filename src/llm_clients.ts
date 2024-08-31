@@ -2,9 +2,14 @@ import axios from "axios";
 import openai from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
 
-const SYSTEM_PROMPT = "You are an expert in coding with PyTorch. You are given a piece of Python code and a position in the code. You should provide the expected shape of the PyTorch tensor at the given position. The shape should be in the format of a tuple of integers.\n\n";
+const SYSTEM_PROMPT = 'You are an expert in coding with PyTorch, Numpy, Tensorflow, Jax, and other deep learning frameworks. You are given a piece of Python code and an array/tensor variable in the code. You should provide the expected shape of the given array/tensor. The shape should be in the format of a tuple of integers. If the given variable is not array/tensor, you should reply with \"The given variable does not seem to be an array/tensor.\"\n\n'; 
 
-abstract class LLMClient {
+interface ILLMClient {
+    getModelId(): string;
+    getCompletion(prompt: string, maxToken: number): Promise<string|null>;
+}
+
+abstract class LLMClient implements ILLMClient {
     protected modelId: string;
     protected apiKey: string;
 
@@ -17,7 +22,7 @@ abstract class LLMClient {
         return this.modelId;
     }
 
-    abstract getCompletion(prompt: string): Promise<string|null>;
+    abstract getCompletion(prompt: string, maxToken: number): Promise<string|null>;
 }
 
 
@@ -38,7 +43,7 @@ class OpenAILike extends LLMClient {
         });
     }
 
-    async getCompletion(prompt: string): Promise<string|null> {
+    async getCompletion(prompt: string, maxToken: number): Promise<string|null> {
         try {
             const completion = await this.client.chat.completions.create({
                 model: this.modelId,         
@@ -46,6 +51,7 @@ class OpenAILike extends LLMClient {
                     { role: "system", content: SYSTEM_PROMPT},
                     {role: "user", content: prompt}
                 ],
+                max_tokens: maxToken,
                 temperature: 0.15,
             });
             
@@ -73,12 +79,12 @@ class AnthropicClient extends LLMClient {
         this.client = new Anthropic({ apiKey: apiKey });
     }
 
-    async getCompletion(prompt: string): Promise<string|null> {
+    async getCompletion(prompt: string, maxToken: number): Promise<string|null> {
         try {
 
             const msg = await this.client.messages.create({
                 model: this.modelId,
-                max_tokens: 128,
+                max_tokens: maxToken,
                 temperature: 0.15,
                 messages: [
                     {role: "user", content: SYSTEM_PROMPT + prompt},
@@ -106,13 +112,17 @@ class MoonShotClient extends OpenAILike {}
 
 class CodeGeeXClient extends OpenAILike {}
 
+class MistralClient extends OpenAILike {}
+
 class OpenAIClient extends OpenAILike {}
 
 export function getLLMClient(modelId: string, apiKey: string): LLMClient {
     if (modelId.startsWith('moonshot')) {
         return new MoonShotClient(modelId, apiKey, "https://api.moonshot.cn/v1");
-    } else if (modelId.startsWith('codegeex')) {
+    } else if (modelId.startsWith('codegeex') || modelId.startsWith('glm')) {
         return new CodeGeeXClient(modelId, apiKey, "https://open.bigmodel.cn/api/paas/v4");
+    }else if (modelId.startsWith('mistral') || modelId.startsWith('codestral')) {
+        return new OpenAIClient(modelId, apiKey, "https://api.mistral.ai/v1");
     } else if (modelId.startsWith('gpt')) {
         return new OpenAIClient(modelId, apiKey, "https://api.openai.com/v1");
     } else if (modelId.startsWith('claude')) {

@@ -14,12 +14,8 @@
     "email": "sean@contoso.com"
   },
   "license": "MIT",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "./icon-matrix.png",
-  "galleryBanner": {
-    "color": "#C80000",
-    "theme": "dark"
-  },
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -71,12 +67,18 @@
             "gpt-4o-mini",
             "claude-3-5-sonnet-20240620",
             "claude-3-opus-20240229",
-            "claude-3-sonnet-20240229",
             "claude-3-haiku-20240307",
+            "mistral-small-latest",
+            "mistral-large-latest",
+            "codestral-latest",
             "moonshot-v1-auto",
             "moonshot-v1-8k",
             "moonshot-v1-32k",
             "moonshot-v1-128k",
+            "glm-4-plus",
+            "glm-4-flash",
+            "glm-4-airx",
+            "glm-4-long",
             "codegeex-4"
           ],
           "description": "which LLM to use"
@@ -84,6 +86,11 @@
         "shapeteller.apiKey": {
           "type": "string",
           "description": "your LLM platform API key"
+        },
+        "shapeteller.maxToken": {
+          "type": "number",
+          "default": 128,
+          "description": "how many tokens at most do yo allow the LLM to genereate"
         }
       }
     }
