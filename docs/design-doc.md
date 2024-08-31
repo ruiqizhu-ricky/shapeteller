@@ -2,7 +2,7 @@
 
 ## Background
 
-I found that the most error-prone and confusing aspect in programming neural networks is getting the shape of a tensor wrong, leading to an error like `RuntimeError: mat1 and mat2 shapes cannot be multiplied`. I've always wanted a tool that could tell/remind me the shape of each tensor **instantly** while I'm writing the code, without having to run the program and print the shapes. I'm not the only one struggling with this issue. Someone even [posted on X]https://twitter.com/Algomancer/status/1763024972623249572), but none of the replies under that post were satisfied.
+I found that the most error-prone and confusing aspect in programming neural networks is getting the shape of a tensor wrong, leading to an error like `RuntimeError: mat1 and mat2 shapes cannot be multiplied`. I've always wanted a tool that could tell/remind me the shape of each tensor **instantly** while I'm writing the code, without having to run the program and print the shapes. I'm not the only one struggling with this issue. Someone even [posted on X](https://twitter.com/Algomancer/status/1763024972623249572), but none of the replies under that post were satisfied.
 
 <img alt="tweet-screen" src="tweet-post.jpg" width=500>
 
