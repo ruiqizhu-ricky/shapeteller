@@ -1,3 +1,5 @@
+// Shall I use langchain/langgraph ?
+
 import { Position } from 'vscode';
 
 interface IPromptManager {

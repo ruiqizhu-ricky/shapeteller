@@ -32,7 +32,7 @@
     "AI"
   ],
   "activationEvents": [
-    "onCommand:shapeteller.activate"
+    "onLanguage:python"
   ],
   "main": "./dist/extension.js",
   "contributes": {
