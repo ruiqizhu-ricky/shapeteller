@@ -4,12 +4,9 @@ import { Position } from 'vscode';
 
 
 
-export const SYSTEM_PROMPT = `You are an expert in coding with PyTorch, Numpy, Tensorflow, Jax, or other deep learning frameworks. You are given a piece of Python code and an array/tensor variable in the code. You should provide the expected shape of the given array/tensor. 
+export const SYSTEM_PROMPT_Template = `You are an expert in coding with PyTorch, Numpy, Tensorflow, Jax, or other deep learning frameworks. You are given a piece of Python code and an array/tensor variable in the code. You should provide the expected shape of the given array/tensor. 
 - The shape should be in the format of a tuple of integers. 
 - If the given variable is not array/tensor, you should reply with "The given variable "<Fill The Variable>" does not seem to be an array/tensor". 
-- Whenever possible, use variable names instead of constant numbers unless explicilt stated.
-
-
 `;
 
 export const USER_PROMPT_TEMPLATE = 'Here is some Python code:\n\n```python\n{code_fragment}\n```\n\nPlease provide the expected shape of the tensor `{selected_var}` at line {line_num} and column {line_col}. ';
@@ -27,7 +24,23 @@ export function fillInString(stringTemplate: string, params: Map<string, string>
 
 export class PromptManager {
 
-    getUserPrompt(code: string, selected_var:string, pos: Position, mode='concise',
+    getSysPrompt(mode='concise', is_prefer_var=true): string {
+        let sys_prompt = SYSTEM_PROMPT_Template;
+        if (mode === 'concise') {
+            sys_prompt += '\n - Please provide concise and clear answers.\n';
+        } else {
+            sys_prompt += '\n - Please detail the steps how you figure out the shapes.\n';
+        }
+
+        if (is_prefer_var){
+            sys_prompt += '\n - Whenever possible, use variable names instead of constant numbers.\n';
+        } else {
+            sys_prompt += '\n - Whenever possible, figure out the exact numbers, e.g., `(16, 50304)` of the shapes rather than using variable names, e.g. `(seq_len, vovab_size)`.\n';
+        }
+        return sys_prompt;
+    }
+
+    getUserPrompt(code: string, selected_var:string, pos: Position,
         docs?: Array<string>, moreCode?: Array<string> ): string 
     {
         

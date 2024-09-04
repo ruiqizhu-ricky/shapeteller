@@ -91,6 +91,20 @@
           "type": "number",
           "default": 128,
           "description": "how many tokens at most do yo allow the LLM to genereate"
+        },
+        "shapeteller.mode": {
+          "type": "string",
+          "enum": [
+            "concise",
+            "detail"
+          ],
+          "default": "concise",
+          "description": "whether to provide detail steps on how to figure out the shapes (needs more tokens)."
+        },
+        "shapeteller.is_prefer_var": {
+          "type": "boolean",
+          "default": true,
+          "description": "prefer variables (e.g. `[seq_len, vovab_size]`) over exact numbers (e.g., `[16, 50304]`)."
         }
       }
     }

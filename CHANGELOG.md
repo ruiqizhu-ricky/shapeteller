@@ -10,7 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - add support for locally deployed model ([Ollama](https://github.com/ollama/ollama) and [vllm](https://github.com/vllm-project/vllm))
 
-## [0.0.3] - 2024.09.04 (4th Sept 2024)
+
+## [0.1.1] - 2024.09.04 (4th Sept 2024)
+
+### Added
+- Support `concise` mode vs `detail` mode in settings
+- support `is_prefer_var` in settings
+
+
+## [0.1.0] - 2024.09.04 (4th Sept 2024)
 
 ### Added
 - developed the prompt manager module

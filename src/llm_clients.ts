@@ -1,8 +1,15 @@
-import axios from "axios";
+import * as vscode from 'vscode';
+// import axios from "axios";
 import openai from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
 
-import { SYSTEM_PROMPT } from "./prompts";
+import { PromptManager } from "./prompts";
+
+const config = vscode.workspace.getConfiguration('shapeteller');
+const mode = config.get('mode', 'concise');
+const is_prefer_var = config.get('is_prefer_var', true);
+
+const promptManager = new PromptManager();
 
 export interface ILLMClient {
     getModelId(): string;
@@ -10,6 +17,7 @@ export interface ILLMClient {
 }
 
 abstract class LLMClient implements ILLMClient {
+
     protected modelId: string;
     protected apiKey: string;
 
@@ -45,10 +53,12 @@ class OpenAILike extends LLMClient {
 
     async getCompletion(prompt: string, maxToken: number): Promise<string|null> {
         try {
+            
+
             const completion = await this.client.chat.completions.create({
                 model: this.modelId,         
                 messages: [
-                    { role: "system", content: SYSTEM_PROMPT},
+                    { role: "system", content: promptManager.getSysPrompt(mode, is_prefer_var) },
                     {role: "user", content: prompt}
                 ],
                 max_tokens: maxToken,
@@ -87,7 +97,10 @@ class AnthropicClient extends LLMClient {
                 max_tokens: maxToken,
                 temperature: 0.15,
                 messages: [
-                    {role: "user", content: SYSTEM_PROMPT + prompt},
+                {
+                    role: "user", 
+                    content: promptManager.getSysPrompt(mode, is_prefer_var) + '\n\n' + prompt
+                },
                 ],
               });
 
