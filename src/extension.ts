@@ -1,19 +1,18 @@
 import * as vscode from 'vscode';
 import { HoverProvider, TextDocument, Position, CancellationToken, Hover, MarkdownString } from 'vscode';
 import { getLLMClient } from './llm_clients';
-
+import { PromptManager } from './prompts';
 
 const config = vscode.workspace.getConfiguration('shapeteller');
 const client = getLLMClient(config.modelId, config.apiKey);
 var isOn = false;  // controls if call the LLM API when hovering over a variable
-
+const promptManager = new PromptManager();
 
 async function getTensorShapeFromLLM(document: TextDocument, position: Position, selected_var: string): Promise<string | null> {
-	console.log("Requesting shape ...");
-	// TODO: finer way to select code pieces to send to the model
+	console.log(`Requesting shape from ${client.getModelId()} ...`);
+	// TODO: finer way to select code fragments to send to the model
 	const code_fragment = document.getText();
-	// TODO: crafted prompts
-	const prompt = `Here is some Python code:\n\n\`\`\`python\n${code_fragment}\n\`\`\`\n\nPlease provide the expected shape of the tensor \`${selected_var}\` at line ${position.line + 1}, whenever possible, use variable names instead of constant numbers.`;
+    const prompt = promptManager.getUserPrompt(code_fragment, selected_var, position);
 
 	try {
         const generated_text = client.getCompletion(prompt, config.maxToken);
@@ -37,7 +36,7 @@ class PyTorchTensorHoverProvider implements HoverProvider {
         const selected_var = document.getText(range);
 
 		if (!isOn) {
-            return new Hover('Tensor-teller is off', range);
+            return new Hover('**ShapeTeller:** extension is off', range);
         }
 
         // Request the expected tensor shape from the LLM API.

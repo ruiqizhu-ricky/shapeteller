@@ -11,7 +11,7 @@
   "homepage": "https://github.com/ruiqizhu-ricky/shapeteller/blob/main/README.md",
   "bugs": {
     "url": "https://github.com/ruiqizhu-ricky/shapeteller/issues",
-    "email": "sean@contoso.com"
+    "email": "ruiqi_zhu@outlook.com"
   },
   "license": "MIT",
   "version": "0.0.2",
@@ -97,6 +97,7 @@
   },
   "scripts": {
     "compile": "npm run check-types && node esbuild.js",
+    "test": "vscode-test",
     "check-types": "tsc --noEmit",
     "watch": "npm-run-all -p watch:*",
     "watch:esbuild": "node esbuild.js --watch",

@@ -2,9 +2,9 @@ import axios from "axios";
 import openai from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
 
-const SYSTEM_PROMPT = 'You are an expert in coding with PyTorch, Numpy, Tensorflow, Jax, and other deep learning frameworks. You are given a piece of Python code and an array/tensor variable in the code. You should provide the expected shape of the given array/tensor. The shape should be in the format of a tuple of integers. If the given variable is not array/tensor, you should reply with \"The given variable does not seem to be an array/tensor.\"\n\n'; 
+import { SYSTEM_PROMPT } from "./prompts";
 
-interface ILLMClient {
+export interface ILLMClient {
     getModelId(): string;
     getCompletion(prompt: string, maxToken: number): Promise<string|null>;
 }
@@ -122,7 +122,7 @@ export function getLLMClient(modelId: string, apiKey: string): LLMClient {
     } else if (modelId.startsWith('codegeex') || modelId.startsWith('glm')) {
         return new CodeGeeXClient(modelId, apiKey, "https://open.bigmodel.cn/api/paas/v4");
     }else if (modelId.startsWith('mistral') || modelId.startsWith('codestral')) {
-        return new OpenAIClient(modelId, apiKey, "https://api.mistral.ai/v1");
+        return new MistralClient(modelId, apiKey, "https://api.mistral.ai/v1");
     } else if (modelId.startsWith('gpt')) {
         return new OpenAIClient(modelId, apiKey, "https://api.openai.com/v1");
     } else if (modelId.startsWith('claude')) {

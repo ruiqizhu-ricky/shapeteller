@@ -34,7 +34,8 @@ Other goals are:
 - The `Prompt/Agent manager` component is responsible for generating prompts from complex templates with relevant code and docs. It defines an interface like
   ```typescript
   interface IPromptManager {
-    getPrompt(code: string, pos: Position, docs: Array<string>|null, moreCode: Array<string>|null): string;
+    getSysPrompt(): string;
+    getUserPrompt(code: string, pos: Position, docs?: Array<string>, moreCode?: Array<string>): string;
   }
   ```   
 
