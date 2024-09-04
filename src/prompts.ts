@@ -1,8 +1,8 @@
 // Shall I use langchain/langgraph ?
-
+import * as vscode from 'vscode';
 import { Position } from 'vscode';
 
-
+const config = vscode.workspace.getConfiguration('shapeteller');
 
 export const SYSTEM_PROMPT_Template = `You are an expert in coding with PyTorch, Numpy, Tensorflow, Jax, or other deep learning frameworks. You are given a piece of Python code and an array/tensor variable in the code. You should provide the expected shape of the given array/tensor. 
 - The shape should be in the format of a tuple of integers. 
@@ -24,8 +24,11 @@ export function fillInString(stringTemplate: string, params: Map<string, string>
 
 export class PromptManager {
 
-    getSysPrompt(mode='concise', is_prefer_var=true): string {
+    getSysPrompt(): string {
+        const mode = config.get('mode', 'concise');
+        const is_prefer_var = config.get('is_prefer_var', true);
         let sys_prompt = SYSTEM_PROMPT_Template;
+        
         if (mode === 'concise') {
             sys_prompt += '\n - Please provide concise and clear answers.\n';
         } else {

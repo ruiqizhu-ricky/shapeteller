@@ -1,13 +1,8 @@
-import * as vscode from 'vscode';
 // import axios from "axios";
 import openai from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
 
 import { PromptManager } from "./prompts";
-
-const config = vscode.workspace.getConfiguration('shapeteller');
-const mode = config.get('mode', 'concise');
-const is_prefer_var = config.get('is_prefer_var', true);
 
 const promptManager = new PromptManager();
 
@@ -58,7 +53,7 @@ class OpenAILike extends LLMClient {
             const completion = await this.client.chat.completions.create({
                 model: this.modelId,         
                 messages: [
-                    { role: "system", content: promptManager.getSysPrompt(mode, is_prefer_var) },
+                    { role: "system", content: promptManager.getSysPrompt() },
                     {role: "user", content: prompt}
                 ],
                 max_tokens: maxToken,
@@ -99,7 +94,7 @@ class AnthropicClient extends LLMClient {
                 messages: [
                 {
                     role: "user", 
-                    content: promptManager.getSysPrompt(mode, is_prefer_var) + '\n\n' + prompt
+                    content: promptManager.getSysPrompt() + '\n\n' + prompt
                 },
                 ],
               });

@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - add support for locally deployed model ([Ollama](https://github.com/ollama/ollama) and [vllm](https://github.com/vllm-project/vllm))
+- create popup window for further user interaction with the model
 
+
+## [0.1.2] - 2024.09.04 (4th Sept 2024)
+
+- move prompts related configs from `llm_client.ts` to `prompts.ts`
 
 ## [0.1.1] - 2024.09.04 (4th Sept 2024)
 
