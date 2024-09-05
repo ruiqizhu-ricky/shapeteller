@@ -14,8 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.3.0] - 2024.09.04 (4th Sept 2024)
 
+- grouped the settings and reorder them
+
 ### Added
 - add support for locally deployed model ([Ollama](https://github.com/ollama/ollama) and [vllm](https://github.com/vllm-project/vllm))
+
 
 ## [0.2.0] - 2024.09.04 (4th Sept 2024)
 
