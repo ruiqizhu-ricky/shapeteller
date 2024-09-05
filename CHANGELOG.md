@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add support for locally deployed model ([Ollama](https://github.com/ollama/ollama) and [vllm](https://github.com/vllm-project/vllm))
 - create popup window for further user interaction with the model
 
+## [0.2.0] - 2024.09.04 (4th Sept 2024)
+
+- switch `@types/vscode` from v1.92.0 to v1.91.0 to support the [current Cursor version](https://www.cursor.com/)
 
 ## [0.1.2] - 2024.09.04 (4th Sept 2024)
 

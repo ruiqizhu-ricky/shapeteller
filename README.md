@@ -5,8 +5,7 @@ An LLM-powered vscode extension that **tells the shape of arrays and tensors** w
 
 <img src="docs/example-1.png" width=600>
 
-> ![CAUTION] 
-> 
+> [!CAUTION] 
 > Since we make use of LLMs, the resulting shapes may not be accurate due to the inherent problem of [hallucination](https://en.wikipedia.org/wiki/Hallucination_(artificial_intelligence)). If you feel doubtful about the result, or want to be 100% accurate, you'd better run the code and print the shapes.
 
 
