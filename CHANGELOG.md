@@ -8,7 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- add support for locally deployed model ([Ollama](https://github.com/ollama/ollama) and [vllm](https://github.com/vllm-project/vllm))
 - create popup window for further user interaction with the model
 
 

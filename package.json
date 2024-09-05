@@ -21,9 +21,15 @@
   },
   "keywords": [
     "pytorch",
+    "tensorflow",
+    "jax",
     "tensor",
-    "shape",
     "array",
+    "shape",
+    "AI",
+    "Deep Learning",
+    "LLM",
+    "Machine Learning",
     "python"
   ],
   "categories": [
@@ -39,11 +45,13 @@
     "commands": [
       {
         "command": "shapeteller.turnOn",
-        "title": "Shape Teller: turn on the shapeteller extension"
+        "title": "Shape Teller: turn on the shapeteller extension",
+        "when": "editorLangId == python"
       },
       {
         "command": "shapeteller.turnOff",
-        "title": "Shape Teller: turn off the shapeteller extension"
+        "title": "Shape Teller: turn off the shapeteller extension",
+        "when": "editorLangId == python"
       }
     ],
     "configuration": {
