@@ -26,7 +26,7 @@ export class PromptManager {
 
     getSysPrompt(): string {
         const mode = config.get('mode', 'concise');
-        const is_prefer_var = config.get('is_prefer_var', true);
+        const isPreferVar = config.get('isPreferVar', true);
         let sys_prompt = SYSTEM_PROMPT_Template;
         
         if (mode === 'concise') {
@@ -35,7 +35,7 @@ export class PromptManager {
             sys_prompt += '\n - Please detail the steps how you figure out the shapes.\n';
         }
 
-        if (is_prefer_var){
+        if (isPreferVar){
             sys_prompt += '\n - Whenever possible, use variable names instead of constant numbers.\n';
         } else {
             sys_prompt += '\n - Whenever possible, figure out the exact numbers, e.g., `(16, 50304)` of the shapes rather than using variable names, e.g. `(seq_len, vovab_size)`.\n';

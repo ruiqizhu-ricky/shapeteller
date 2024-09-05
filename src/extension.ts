@@ -1,12 +1,23 @@
 import * as vscode from 'vscode';
 import { HoverProvider, TextDocument, Position, CancellationToken, Hover, MarkdownString } from 'vscode';
-import { getLLMClient } from './llm_clients';
+import { getLLMClient, getCustomisedLLMClient, ILLMClient } from './llm_clients';
 import { PromptManager } from './prompts';
 
-const config = vscode.workspace.getConfiguration('shapeteller');
-const client = getLLMClient(config.modelId, config.apiKey);
+
 var isOn = false;  // controls if call the LLM API when hovering over a variable
+const config = vscode.workspace.getConfiguration('shapeteller');
 const promptManager = new PromptManager();
+
+const apiEndpoint = config.get('useThisAPIEndpoint');
+var client: ILLMClient;
+if (apiEndpoint) {
+    const modelId = config.get('customisedModelId', 'unknownModelId');
+    client = getCustomisedLLMClient(modelId, config.apiKey, apiEndpoint as string);
+} 
+else {
+    client = getLLMClient(config.modelId, config.apiKey);
+}
+
 
 async function getTensorShapeFromLLM(document: TextDocument, position: Position, selected_var: string): Promise<string | null> {
 	console.log(`Requesting shape from ${client.getModelId()} ...`);
@@ -43,7 +54,7 @@ class PyTorchTensorHoverProvider implements HoverProvider {
         const llmResp = await getTensorShapeFromLLM(document, position, selected_var);
 
         if (llmResp) {
-            const message = new MarkdownString(`**ShapeTeller:** ${llmResp}`);
+            const message = new MarkdownString(`**ShapeTeller:** ${llmResp} \n\n---\nFrom \`${client.getModelId()}\``);
             return new Hover(message, range);
         } else{
 			return new Hover('null', range);
@@ -60,7 +71,6 @@ export function activate(context: vscode.ExtensionContext) {
             new PyTorchTensorHoverProvider()
         )
     );
-	
 	context.subscriptions.push(vscode.commands.registerCommand('shapeteller.turnOn', () => {
 		isOn = true;
 		vscode.window.showInformationMessage('Tensor-Shape-Teller is on!');
@@ -70,7 +80,6 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.showInformationMessage('Tensor-Shape-Teller is off!');
 	}));
 }
-
 
 
 // This method is called when your extension is deactivated

@@ -48,17 +48,6 @@
     ],
     "configuration": {
       "title": "Shape Teller",
-      "shapeteller.platform": {
-        "type": "string",
-        "enum": [
-          "Moonshot",
-          "OpenAI",
-          "Anthropic",
-          "Zhipu"
-        ],
-        "default": "Moonshot",
-        "description": "which platform to use"
-      },
       "properties": {
         "shapeteller.modelId": {
           "type": "string",
@@ -101,10 +90,19 @@
           "default": "concise",
           "description": "whether to provide detail steps on how to figure out the shapes (needs more tokens)."
         },
-        "shapeteller.is_prefer_var": {
+        "shapeteller.isPreferVar": {
           "type": "boolean",
           "default": true,
           "description": "prefer variables (e.g. `[seq_len, vovab_size]`) over exact numbers (e.g., `[16, 50304]`)."
+        },
+        "shapeteller.useThisAPIEndpoint": {
+          "type": "string",
+          "default": null,
+          "description": "the API endpoint (e.g., if you deployed a model locally with Ollama or vllm). If specified, it will override the Model ID setting. Please ensure that the specified endpoint is compatible with OpenAI API style."
+        },
+        "shapeteller.customisedModelId": {
+          "type": "string",
+          "description": "the model ID to use when using your specified API endpoint"
         }
       }
     }

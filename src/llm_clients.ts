@@ -1,9 +1,11 @@
 // import axios from "axios";
+import * as vscode from 'vscode';
 import openai from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
 
 import { PromptManager } from "./prompts";
 
+const config = vscode.workspace.getConfiguration('shapeteller');
 const promptManager = new PromptManager();
 
 export interface ILLMClient {
@@ -124,19 +126,30 @@ class MistralClient extends OpenAILike {}
 
 class OpenAIClient extends OpenAILike {}
 
+export function getCustomisedLLMClient(modelId: string, apiKey: string, apiEndpoint: string): LLMClient {
+    return new OpenAILike(modelId, apiKey, apiEndpoint);
+}
+
 export function getLLMClient(modelId: string, apiKey: string): LLMClient {
+    
     if (modelId.startsWith('moonshot')) {
         return new MoonShotClient(modelId, apiKey, "https://api.moonshot.cn/v1");
-    } else if (modelId.startsWith('codegeex') || modelId.startsWith('glm')) {
+    } 
+    if (modelId.startsWith('codegeex') || modelId.startsWith('glm')) {
         return new CodeGeeXClient(modelId, apiKey, "https://open.bigmodel.cn/api/paas/v4");
-    }else if (modelId.startsWith('mistral') || modelId.startsWith('codestral')) {
+    } 
+    
+    if (modelId.startsWith('mistral') || modelId.startsWith('codestral')) {
         return new MistralClient(modelId, apiKey, "https://api.mistral.ai/v1");
-    } else if (modelId.startsWith('gpt')) {
+    }  
+    
+    if (modelId.startsWith('gpt')) {
         return new OpenAIClient(modelId, apiKey, "https://api.openai.com/v1");
-    } else if (modelId.startsWith('claude')) {
+    }  
+    
+    if (modelId.startsWith('claude')) {
         return new AnthropicClient(modelId, apiKey);
-    }
-    else {
-        throw new Error('Unsupported model: ' + modelId);
-    }
+    } 
+    
+    throw new Error('Unsupported model: ' + modelId);
 }
