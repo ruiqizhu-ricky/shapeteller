@@ -34,9 +34,12 @@ Install from [VScode Extension Marketplace](https://marketplace.visualstudio.com
 
 ### Use your own LLM
 
-If you deployed your own model using [Ollama](https://github.com/ollama/ollama) or [vllm](https://github.com/vllm-project/vllm), *which support OpenAI-compatible API*, then you can use it as well. Just set the `shapeteller.customised.modelId` and `shapeteller.customised.apiENdpoint` in the settings. For example, if you run Ollama to serve a `phi3:mini` model:
+If you deployed your own model using [Ollama](https://github.com/ollama/ollama) or [vllm](https://github.com/vllm-project/vllm), *which support OpenAI-compatible API*, then you can use it as well. Just set the `shapeteller.customised.modelId` and `shapeteller.customised.apiENdpoint` in the settings. For example, if you run Ollama to serve a `phi3:mini` model, and your API endpoint is (by default) ``:
 
 <img src="docs/images/full-settings.png">
+
+> [!NOTE]
+> If you set your `shapeteller.customised.modelId` and `shapeteller.customised.apiEndpoint`, then the `shapeteller.platform.modelId` and `shapeteller.platform.apiKey` would be ignored. That says, the extension will prioritise your customised model over the commercial ones.
 
 ### General Settings
 

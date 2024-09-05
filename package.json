@@ -93,7 +93,7 @@
           "default": null,
           "category": "customised",
           "order": 2,
-          "description": "the API endpoint (e.g., if you deployed a model locally with Ollama or vllm). If specified, it will override the Model ID setting. Please ensure that the specified endpoint is compatible with OpenAI API style."
+          "description": "the API endpoint of your customised model (e.g., if you deployed a model locally with Ollama or vllm). If specified, it will override the `platform.apiKey` and `platform.model` settings. Please ensure that the specified endpoint is compatible with OpenAI API style."
         },
         "shapeteller.customised.modelId": {
           "type": "string",
