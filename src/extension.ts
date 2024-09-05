@@ -6,16 +6,17 @@ import { PromptManager } from './prompts';
 
 var isOn = false;  // controls if call the LLM API when hovering over a variable
 const config = vscode.workspace.getConfiguration('shapeteller');
+const maxToken = config.get('general.maxToken', 128);  // max token for the LLM to generate
 const promptManager = new PromptManager();
 
-const apiEndpoint = config.get('useThisAPIEndpoint');
+const apiEndpoint = config.get('customised.apiEndpoint');
 var client: ILLMClient;
 if (apiEndpoint) {
-    const modelId = config.get('customisedModelId', 'unknownModelId');
+    const modelId = config.get('customised.modelId', 'no-model-id');
     client = getCustomisedLLMClient(modelId, config.apiKey, apiEndpoint as string);
 } 
 else {
-    client = getLLMClient(config.modelId, config.apiKey);
+    client = getLLMClient(config.platform.modelId, config.platform.apiKey);
 }
 
 
@@ -26,11 +27,11 @@ async function getTensorShapeFromLLM(document: TextDocument, position: Position,
     const prompt = promptManager.getUserPrompt(code_fragment, selected_var, position);
 
 	try {
-        const generated_text = client.getCompletion(prompt, config.maxToken);
+        const generated_text = client.getCompletion(prompt, maxToken);
         console.log('result from LLM:' + generated_text);
         return generated_text;
     } catch (error) {
-        console.error(`Error calling the ${config.modelId} model:`, error);
+        console.error(`Error calling the ${client.getModelId()} model:`, error);
         if (error instanceof Error) {
             return error.message;
         }

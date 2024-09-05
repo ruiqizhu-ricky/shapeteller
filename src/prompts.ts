@@ -3,8 +3,10 @@ import * as vscode from 'vscode';
 import { Position } from 'vscode';
 
 const config = vscode.workspace.getConfiguration('shapeteller');
+const mode = config.get('general.mode', 'concise');
+const isPreferVar = config.get('general.isPreferVar', true);
 
-export const SYSTEM_PROMPT_Template = `You are an expert in coding with PyTorch, Numpy, Tensorflow, Jax, or other deep learning frameworks. You are given a piece of Python code and an array/tensor variable in the code. You should provide the expected shape of the given array/tensor. 
+export const SYSTEM_PROMPT_Template = `You are an expert in coding with PyTorch, Numpy, Tensorflow, Jax, or other deep learning frameworks. You are given a piece of Python code and an array/tensor variable in the code. You should provide the expected shape of the given array/tensor. Please take exteme care and think step by step. Here are some more requirements:
 - The shape should be in the format of a tuple of integers. 
 - If the given variable is not array/tensor, you should reply with "The given variable "<Fill The Variable>" does not seem to be an array/tensor". 
 `;
@@ -25,8 +27,6 @@ export function fillInString(stringTemplate: string, params: Map<string, string>
 export class PromptManager {
 
     getSysPrompt(): string {
-        const mode = config.get('mode', 'concise');
-        const isPreferVar = config.get('isPreferVar', true);
         let sys_prompt = SYSTEM_PROMPT_Template;
         
         if (mode === 'concise') {
