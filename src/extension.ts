@@ -39,7 +39,7 @@ async function getTensorShapeFromLLM(document: TextDocument, position: Position,
 }
 
 
-class PyTorchTensorHoverProvider implements HoverProvider {
+class TensorShapeHoverProvider implements HoverProvider {
     async provideHover(document: TextDocument, position: Position, token: CancellationToken): Promise<Hover> {
         console.log("Hover provider created");
 
@@ -68,7 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.languages.registerHoverProvider(
             { scheme: 'file', language: 'python' },
-            new PyTorchTensorHoverProvider()
+            new TensorShapeHoverProvider()
         )
     );
 	context.subscriptions.push(vscode.commands.registerCommand('shapeteller.turnOn', () => {
