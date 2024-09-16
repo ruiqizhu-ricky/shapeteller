@@ -65,7 +65,7 @@ class TensorShapeHoverProvider implements HoverProvider {
 
 
 export function activate(context: vscode.ExtensionContext) {
-	console.log("Extension TensorTeller is on");
+	console.log("Extension Tensor-Shape-Teller (v1.0.0) is on");
     context.subscriptions.push(
         vscode.languages.registerHoverProvider(
             { scheme: 'file', language: 'python' },

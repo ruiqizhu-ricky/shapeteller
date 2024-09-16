@@ -8,8 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- create popup window for further user interaction with the model
+- None
 
+## [1.0.0] - 2024.09.16 (16th Sept 2024)
+- considered to be completed.
 
 ## [0.3.0] - 2024.09.04 (4th Sept 2024)
 

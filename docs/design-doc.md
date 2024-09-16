@@ -53,3 +53,6 @@ Update
 
 Decided not to to that. It's too complicated and may not be necessary. The users can just run the program and print the shapes manually. Though also takes me a while, but that provide 100% accurate results, and that should be the thing to do for satisfaction.
 
+> Identify relevant dependent code pieces and doc paragraphs, and submit them to the LLM as reference materials.
+
+Decided not to to that. It's adds a lot more complexity (RAG sub-system) yet the accuracy is not guaranteed. Currently the use is good enough. Will not do this until further needs.
